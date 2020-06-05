@@ -1,5 +1,3 @@
-const notify = new Event('notify');
-
 customElements.define('pricing-toggle', 
   class extends HTMLElement {
     constructor() {
@@ -9,6 +7,7 @@ customElements.define('pricing-toggle',
     
     connectedCallback() {
       const template = document.getElementById('toggle-button');
+      const notify = new Event('notify');
       this.shadowRoot.appendChild(template.content.cloneNode(true));
       this.addEventListener('click', _ => this.dispatchEvent(notify));
     }
