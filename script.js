@@ -1,3 +1,24 @@
+customElements.define('pricing-container',
+  class extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      this.addEventListener('notify', this.notify);
+    }
+
+    disconnectedCallback() {
+      this.removeEventListener('notify', this.notify);
+    }
+
+    notify() {
+      const cards = this.querySelectorAll('pricing-card');
+      cards.forEach(card => card.toggleAttribute('subscribe-annually'));
+    }
+  }
+);
+
 customElements.define('pricing-toggle', 
   class extends HTMLElement {
     constructor() {
@@ -7,15 +28,17 @@ customElements.define('pricing-toggle',
     
     connectedCallback() {
       const template = document.getElementById('toggle-button');
-      const notify = new Event('notify');
       this.shadowRoot.appendChild(template.content.cloneNode(true));
-      this.addEventListener('click', _ => this.dispatchEvent(notify));
+      this.addEventListener('click', this.dispatchNotify);
     }
 
     disconnectedCallback() {
-      this.removeEventListener('click', _ => this.dispatchEvent(notify));
+      this.removeEventListener('click', this.dispatchNotify);
     }
 
+    dispatchNotify() {
+      this.dispatchEvent(new CustomEvent('notify', {'bubbles': true}));
+    }
   }
 );
 
@@ -29,16 +52,24 @@ customElements.define('pricing-card',
     connectedCallback() {
       const template = document.getElementById('pricing-card');
       this.shadowRoot.appendChild(template.content.cloneNode(true));
-      this.addEventListener('notify', update);
+      
+    }
+
+    static get observedAttributes() {
+      return ['subscribe-annually'];
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+      this.update();
     }
 
     update() {
       const slot = this.querySelector('[slot="pricing"]');
-      const price = Number(slot.innerHTML);
-      const isAnnually = slot.hasAttribute('annually');
-      const newPrice = isAnnually ? price / 11 : price * 11;
-      slot.toggleAttribute('annually');
-      slot.innerHTML = newPrice.toFixed(2);
+      const isAnnually = this.hasAttribute('subscribe-annually');
+      const priceAnnually = slot.getAttribute('annually');
+      const priceMonthly = slot.getAttribute('monthly');
+      const price = isAnnually ? priceAnnually : priceMonthly;
+      slot.innerHTML = price;
     }
   }
 );
