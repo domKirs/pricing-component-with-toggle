@@ -1,62 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script defer src="script.js"></script>
-    <title>Pricing</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+  <title>Pricing</title>
 </head>
 <body>
-    <main>
-        <h1>Our Pricing</h1>
-        <section>
-            <p>Annually</p>
-            <pricing-toggle></pricing-toggle>
-            <p>Monthly</p>
-        </section>
-        <section>
-            <pricing-card>
-                <span slot="heading">Basic</span>
-                <span slot="pricing">19.99</span>
-                <span slot="storage">500 GB</span>
-                <span slot="users-allowed">2</span>
-                <span slot="send-up-to">3 GB</span>
-            </pricing-card>
-        </section>
-        <section>
-            <pricing-card>
-                <span slot="heading">Professional</span>
-                <span slot="pricing">24.99</span>
-                <span slot="storage">1 TB</span>
-                <span slot="users-allowed">5</span>
-                <span slot="send-up-to">10 GB</span>
-            </pricing-card>
-        </section>
-        <section>
-            <pricing-card>
-                <span slot="heading">Master</span>
-                <span slot="pricing">39.99</span>
-                <span slot="storage">2 TB</span>
-                <span slot="users-allowed">10</span>
-                <span slot="send-up-to">20 GB</span>
-            </pricing-card>
-        </section>
-    </main>
-    <template id="toggle-button">
-        <input type="checkbox">
-    </template>
-    <template id="pricing-card">
-        <section>
-            <p><slot name="heading">Pricing Card</slot></p>
-            <strong>$<slot name="pricing">xx.xx</slot></strong>
-            <section>
-                <p><slot name="storage">...</slot> Storage</p>
-                <p><slot name="users-allowed">...</slot> Users Allowed</p>
-                <p>Send up to <slot name="send-up-to">...</slot></p>
-            </section>
-            <button>Learn More</button>
-        </section>
-    </template>
+  <h1>Our Pricing</h1>
+  <pricing-container>
+    <pricing-toggle>
+      <span slot="option-a">Annually</span>
+      <span slot="option-b">Monthly</span>
+    </pricing-toggle>
+    <pricing-card>
+      <span slot="heading">Basic</span>
+      <span slot="pricing" annually="219.89" monthly="19.99">19.99</span>
+      <span slot="storage">500 GB</span>
+      <span slot="users-allowed">2</span>
+      <span slot="send-up-to">3 GB</span>
+    </pricing-card>
+    <pricing-card>
+      <span slot="heading">Professional</span>
+      <span slot="pricing" annually="274.89" monthly="24.99">24.99</span>
+      <span slot="storage">1 TB</span>
+      <span slot="users-allowed">5</span>
+      <span slot="send-up-to">10 GB</span>
+    </pricing-card>
+    <pricing-card>
+      <span slot="heading">Master</span>
+      <span slot="pricing" annually="439.89" monthly="39.99">39.99</span>
+      <span slot="storage">2 TB</span>
+      <span slot="users-allowed">10</span>
+      <span slot="send-up-to">20 GB</span>
+    </pricing-card>
+  </pricing-container>
+  <template id="toggle-button">
+      <p><slot name="option-a">option a</slot></p>
+      <input type="checkbox">
+      <p><slot name="option-b">option b</slot></p>
+  </template>
+  <template id="pricing-card">
+    <section>
+      <p><slot name="heading">Pricing Card</slot></p>
+      <strong>$<slot name="pricing">xx.xx</slot></strong>
+      <section>
+        <p><slot name="storage">...</slot> Storage</p>
+        <p><slot name="users-allowed">...</slot> Users Allowed</p>
+        <p>Send up to <slot name="send-up-to">...</slot></p>
+      </section>
+      <button>Learn More</button>
+    </section>
+  </template>
 </body>
 </html>
